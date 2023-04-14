@@ -19,7 +19,7 @@ const Dashboard = ({ navigation }) => {
       <TouchableOpacity style={[styles.listItem, styles.bgWhite]}>
         <Image
           style={styles.listItemImage}
-          source={require("../assets/food-banner1.jpeg")}
+          source={require("../assets/food_banner1.jpeg")}
         />
         <View style={styles.listItemDetails}>
           <Text style={styles.listItemTitle}>{title}</Text>
@@ -75,7 +75,7 @@ const Dashboard = ({ navigation }) => {
                 {/* <Text>A short description</Text> */}
                 <Image
                   style={styles.image}
-                  source={require("../assets/food-banner1.jpeg")}
+                  source={require("../assets/food_banner1.jpeg")}
                 />
               </View>
               <View style={styles.arrowBorder} />
@@ -102,7 +102,7 @@ const Dashboard = ({ navigation }) => {
                 {/* <Text>A short description</Text> */}
                 <Image
                   style={styles.image}
-                  source={require("../assets/food-banner1.jpeg")}
+                  source={require("../assets/food_banner1.jpeg")}
                 />
               </View>
               <View style={styles.arrowBorder} />
