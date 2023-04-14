@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.darkGreen,
     paddingTop: "20%",
+    justifyContent: "flex-end",
   },
   tabContainer: {
     backgroundColor: Colors.blackColor,
@@ -45,7 +46,18 @@ export const styles = StyleSheet.create({
     paddingTop: "15%",
     backgroundColor: Colors.whiteColor,
   },
+  bottomContainer: {
+    padding: 10,
+    marginTop: "10%",
+    borderTopLeftRadius: "40%",
+    borderTopEndRadius: "40%",
+    paddingTop: "15%",
+    backgroundColor: Colors.whiteColor,
+  },
   row: { flexDirection: "row" },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
   heading: {
     fontSize: 26,
     color: Colors.blackColor,
@@ -179,7 +191,9 @@ export const styles = StyleSheet.create({
   textBlack: {
     color: Colors.blackColor,
   },
-
+  textWhite: {
+    color: Colors.whiteColor,
+  },
   item: {
     backgroundColor: Colors.blackColor,
     padding: 20,
@@ -250,5 +264,11 @@ export const styles = StyleSheet.create({
   },
   flex2: {
     flex: 2,
+  },
+  bgMateDarkBlack: {
+    backgroundColor: Colors.mateDarkBlack,
+  },
+  bgMateLightBlack: {
+    backgroundColor: Colors.mateLightBlack,
   },
 });

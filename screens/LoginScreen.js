@@ -25,53 +25,53 @@ const LoginScreen = ({ navigation }) => {
   // }
 
   const handleSignIn = async () => {
-    // navigation.replace("Dashboard");
-    if (email != "" && password != "") {
-      if (password.length >= 6) {
-        fetch(helper.networkURL + "login", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        })
-          .then((res) => {
-            // console.log(res.status);
-            if (res.status == 200) {
-              return res.json();
-            } else {
-              helper.alertBox({
-                label: "Opps !",
-                message: "Invalid Credentials !!",
-              });
-            }
-          })
-          .then((response) => {
-            helper.setAsync("user", response);
-            navigation.replace("Dashboard");
-          })
-          .catch((err) => {
-            helper.alertBox({
-              label: "Opps !",
-              message: "Something went wrong",
-            });
-          });
-      } else {
-        helper.alertBox({
-          label: "Opps !",
-          message: "Invalid Credentials",
-        });
-      }
-    } else {
-      helper.alertBox({
-        label: "Opps!",
-        message: "Invalid Credentials",
-      });
-    }
+    navigation.replace("Home");
+    // if (email != "" && password != "") {
+    //   if (password.length >= 6) {
+    //     fetch(helper.networkURL + "login", {
+    //       method: "POST",
+    //       headers: {
+    //         Accept: "application/json",
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         email: email,
+    //         password: password,
+    //       }),
+    //     })
+    //       .then((res) => {
+    //         // console.log(res.status);
+    //         if (res.status == 200) {
+    //           return res.json();
+    //         } else {
+    //           helper.alertBox({
+    //             label: "Opps !",
+    //             message: "Invalid Credentials !!",
+    //           });
+    //         }
+    //       })
+    //       .then((response) => {
+    //         helper.setAsync("user", response);
+    //         navigation.replace("Dashboard");
+    //       })
+    //       .catch((err) => {
+    //         helper.alertBox({
+    //           label: "Opps !",
+    //           message: "Something went wrong",
+    //         });
+    //       });
+    //   } else {
+    //     helper.alertBox({
+    //       label: "Opps !",
+    //       message: "Invalid Credentials",
+    //     });
+    //   }
+    // } else {
+    //   helper.alertBox({
+    //     label: "Opps!",
+    //     message: "Invalid Credentials",
+    //   });
+    // }
   };
 
   return (

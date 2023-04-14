@@ -6,3 +6,5 @@ export const darkGreen = "#7c993a";
 export const lightGreen = "#9db45d";
 export const textOnGreen = "#fefbc8";
 export const yellow = "#fcaa53";
+export const mateDarkBlack = "#1d1d1d";
+export const mateLightBlack = "#323232";
