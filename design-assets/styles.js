@@ -16,10 +16,15 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   bottomNavigationContainer: {
-    height: "12%",
-    backgroundColor: Colors.blackColor,
-    padding: 17,
+    height: "10%",
+    paddingHorizontal: 17,
+    paddingVertical: 10,
     alignItems: "center",
+  },
+  divider: {
+    marginTop: 20,
+    height: 2,
+    backgroundColor: Colors.lightGreen,
   },
   topNavigationContainer: {
     height: "13%",
@@ -37,6 +42,12 @@ export const styles = StyleSheet.create({
   bgBlack: {
     backgroundColor: Colors.blackColor,
   },
+  bgDarkGreen: {
+    backgroundColor: Colors.darkGreen,
+  },
+  bgLightGreen: {
+    backgroundColor: Colors.lightGreen,
+  },
   preLoginContainer: {
     flex: 1,
     padding: 10,
@@ -51,12 +62,21 @@ export const styles = StyleSheet.create({
     marginTop: "10%",
     borderTopLeftRadius: "40%",
     borderTopEndRadius: "40%",
-    paddingTop: "15%",
+    paddingTop: "8%",
     backgroundColor: Colors.whiteColor,
   },
   row: { flexDirection: "row" },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  homeMarker: {
+    height: 35,
+    width: 35,
+  },
+  restaurantMarker: {
+    height: 50,
+    width: 50,
+    resizeMode: "contain",
   },
   heading: {
     fontSize: 26,
@@ -179,8 +199,6 @@ export const styles = StyleSheet.create({
     color: Colors.yellow,
   },
   tabIcon: {
-    height: 25,
-    width: 25,
     marginHorizontal: 25,
   },
   tabActiveIcon: {
@@ -270,5 +288,94 @@ export const styles = StyleSheet.create({
   },
   bgMateLightBlack: {
     backgroundColor: Colors.mateLightBlack,
+  },
+  bubble: {
+    flexDirection: "column",
+    alignSelf: "flex-start",
+    backgroundColor: "#fff",
+    borderRadius: 6,
+    borderColor: "#ccc",
+    borderWidth: 0.5,
+    padding: 15,
+    width: 150,
+  },
+  // Arrow below the bubble
+  arrow: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    borderTopColor: "#fff",
+    borderWidth: 16,
+    alignSelf: "center",
+    marginTop: -32,
+  },
+  arrowBorder: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    borderTopColor: "#007a87",
+    borderWidth: 16,
+    alignSelf: "center",
+    marginTop: -0.5,
+    // marginBottom: -15
+  },
+  // Character name
+  name: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  // Character image
+  image: {
+    width: "100%",
+    height: 80,
+  },
+  categoryHorizontalScrollView: {
+    marginVertical: "2%",
+  },
+  chipsScrollView: {
+    position: "absolute",
+  },
+  chipsIcon: {
+    marginRight: 5,
+  },
+  chipsItem: {
+    flexDirection: "row",
+    backgroundColor: Colors.mateDarkBlack,
+    borderRadius: 20,
+    padding: 10,
+    paddingHorizontal: 30,
+    marginHorizontal: 10,
+    height: 35,
+    shadowColor: Colors.mateLightBlack,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 10,
+  },
+  listHorizontalScrollView: {
+    marginVertical: "2%",
+  },
+  listItem: {
+    backgroundColor: Colors.mateDarkBlack,
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+  listItemImage: {
+    width: 150,
+    height: 125,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  listItemDetails: {
+    flexDirection: "row",
+  },
+  listItemTitle: {
+    padding: 10,
+    fontWeight: "bold",
+    flex: 2,
+    width: 100,
+  },
+  listItemPrice: {
+    padding: 10,
+    color: Colors.blackColor,
+    fontWeight: "bold",
   },
 });
