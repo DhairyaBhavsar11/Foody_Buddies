@@ -8,6 +8,11 @@ export const styles = StyleSheet.create({
     paddingTop: "20%",
     justifyContent: "flex-end",
   },
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: Colors.darkGreen,
+    paddingTop: "20%",
+  },
   tabContainer: {
     backgroundColor: Colors.blackColor,
     paddingHorizontal: 10,
@@ -68,6 +73,13 @@ export const styles = StyleSheet.create({
   row: { flexDirection: "row" },
   map: {
     ...StyleSheet.absoluteFillObject,
+    borderRadius: 15,
+  },
+  mapSquare: {
+    marginTop: 10,
+    borderRadius: 15,
+    height: "50%",
+    width: "95%",
   },
   homeMarker: {
     height: 35,
@@ -125,10 +137,28 @@ export const styles = StyleSheet.create({
     marginHorizontal: 8,
     flexDirection: "row",
   },
+  iconProfileTextInput: {
+    backgroundColor: Colors.mateLightBlack,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 15,
+    borderRadius: 15,
+    fontSize: 18,
+    paddingHorizontal: 20,
+    marginVertical: 8,
+    marginHorizontal: 8,
+    flexDirection: "row",
+  },
   iconInput: {
     flex: 1,
     marginLeft: 15,
     fontSize: 18,
+  },
+  iconText: {
+    flex: 1,
+    marginLeft: 15,
+    fontSize: 18,
+    fontWeight: "600",
   },
   datePicker: {
     width: "96%",
@@ -152,6 +182,18 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     paddingHorizontal: 20,
     marginHorizontal: 8,
+  },
+  buttonSave: {
+    backgroundColor: Colors.yellow,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 15,
+    borderRadius: 15,
+    marginTop: 10,
+    fontSize: 20,
+    paddingHorizontal: 20,
+    marginHorizontal: 8,
+    width: "96%",
   },
   buttonBorder: {
     borderWidth: 2,
@@ -377,5 +419,29 @@ export const styles = StyleSheet.create({
     padding: 10,
     color: Colors.blackColor,
     fontWeight: "bold",
+  },
+  profileImage: {
+    backgroundColor: "white",
+    borderRadius: 75,
+    borderColor: "transparent",
+    width: 100,
+    height: 100,
+    marginTop: 30,
+    marginBottom: 15,
+  },
+  profileHeader: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  textNormal: {
+    fontWeight: "600",
+  },
+
+  mb17: {
+    marginBottom: 17,
+  },
+  mb30: {
+    marginBottom: 30,
   },
 });

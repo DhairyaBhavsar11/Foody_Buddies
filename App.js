@@ -5,6 +5,8 @@ import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import Dashboard from "./screens/Dashboard";
 import AccountSettings from "./screens/AccountSettings";
+import ChangePassword from "./screens/ChangePassword";
+import ChangeLocation from "./screens/ChangeLocation";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +37,17 @@ const App = () => {
         <Stack.Screen
           name="Account Settings"
           component={AccountSettings}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Change Password"
+          component={ChangePassword}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Change Location"
+          component={ChangeLocation}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -18,7 +18,7 @@ import {
 } from "@expo/vector-icons";
 import * as Colors from "../design-assets/colors";
 
-const AccountSettings = ({ navigation }) => {
+const ChangePassword = ({ navigation }) => {
   const Item = ({ title }) => {
     // return (
     //   <TouchableOpacity style={[styles.listItem, styles.bgWhite]}>
@@ -34,79 +34,68 @@ const AccountSettings = ({ navigation }) => {
     // );
   };
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
   return (
     <View style={[styles.container, styles.bgDarkGreen]}>
-      <View style={[styles.bottomContainer, styles.bgMateDarkBlack]}>
+      <View style={[styles.preLoginContainer, styles.bgMateDarkBlack]}>
         <ScrollView>
           <KeyboardAvoidingView style={styles.profileHeader}>
-            <Text style={[styles.heading, styles.textWhite]}>
-              Account Settings
-            </Text>
-            <Image
-              style={styles.profileImage}
-              source={require("../assets/profileImage.png")}
-              resizeMode="center"
-            />
-            <Text
-              style={[
-                styles.heading,
-                styles.textWhite,
-                styles.textNormal,
-                styles.mb17,
-              ]}
-            >
-              Bhautik Pethani
+            <Text style={[styles.heading, styles.textWhite, styles.mb30]}>
+              Change Password
             </Text>
             <View style={styles.iconProfileTextInput}>
-              <Ionicons name="person" size={24} color="white" />
+              <MaterialIcons name="lock-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
+                // value={password}
+                // onChangeText={setPassword}
                 placeholderTextColor={"grey"}
-                placeholder="First name"
+                placeholder="Old Password"
+                secureTextEntry={passwordVisible ? false : true}
               />
+              <TouchableOpacity
+                onPress={() => {
+                  setPasswordVisible(!passwordVisible);
+                }}
+              >
+                <Ionicons
+                  name={passwordVisible ? "eye-off" : "eye"}
+                  size={26}
+                  color="white"
+                />
+              </TouchableOpacity>
             </View>
             <View style={styles.iconProfileTextInput}>
-              <Ionicons name="person" size={24} color="white" />
+              <MaterialIcons name="lock-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
+                // value={password}
+                // onChangeText={setPassword}
                 placeholderTextColor={"grey"}
-                placeholder="Last name"
+                placeholder="New Password"
+                secureTextEntry={passwordVisible ? false : true}
               />
+              <TouchableOpacity
+                onPress={() => {
+                  setPasswordVisible(!passwordVisible);
+                }}
+              >
+                <Ionicons
+                  name={passwordVisible ? "eye-off" : "eye"}
+                  size={26}
+                  color="white"
+                />
+              </TouchableOpacity>
             </View>
             <View style={styles.iconProfileTextInput}>
-              <MaterialIcons name="mail-outline" size={26} color="white" />
+              <MaterialIcons name="lock-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
+                // value={password}
+                // onChangeText={setPassword}
                 placeholderTextColor={"grey"}
-                placeholder="Email"
-                value="bhautikpethani42@gmail.com"
-                editable={false}
-              />
-            </View>
-            <View style={styles.iconProfileTextInput}>
-              <MaterialIcons name="phone" size={26} color="white" />
-              <TextInput
-                style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
-                placeholderTextColor={"grey"}
-                placeholder="Contact number"
-              />
-            </View>
-            <View style={styles.iconProfileTextInput}>
-              <Ionicons name="location" size={26} color="white" />
-              <TextInput
-                style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
-                placeholderTextColor={"grey"}
-                placeholder="Address"
+                placeholder="Confirm New Password"
+                secureTextEntry={passwordVisible ? false : true}
               />
             </View>
             <TouchableOpacity
@@ -116,7 +105,7 @@ const AccountSettings = ({ navigation }) => {
                 // navigation.navigate("Step 2", { firstName, lastName, email })
               }
             >
-              <Text style={styles.buttonText}>SAVE</Text>
+              <Text style={styles.buttonText}>Change</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </ScrollView>
@@ -126,14 +115,14 @@ const AccountSettings = ({ navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Change Password");
+              //   navigation.replace("Change Password");
             }}
           >
             <Ionicons
               style={styles.tabIcon}
               name="key-outline"
               size={27}
-              color={Colors.whiteColor}
+              color={Colors.lightGreen}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -163,14 +152,14 @@ const AccountSettings = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              // handleSignOut();
+              navigation.replace("Account Settings");
             }}
           >
             <MaterialIcons
               style={styles.tabIcon}
               name="account-circle"
               size={27}
-              color={Colors.lightGreen}
+              color={Colors.whiteColor}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -192,4 +181,4 @@ const AccountSettings = ({ navigation }) => {
   );
 };
 
-export default AccountSettings;
+export default ChangePassword;

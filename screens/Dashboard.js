@@ -9,13 +9,13 @@ import {
 } from "react-native";
 import { styles } from "../design-assets/styles";
 import * as helper from "../services/helper";
-import { MaterialIcons, Feather, SimpleLineIcons } from "@expo/vector-icons";
-import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  Callout,
-  Circle,
-} from "react-native-maps";
+import {
+  MaterialIcons,
+  Feather,
+  SimpleLineIcons,
+  Ionicons,
+} from "@expo/vector-icons";
+import MapView, { Marker, Callout, Circle } from "react-native-maps";
 import * as Colors from "../design-assets/colors";
 
 const Dashboard = ({ navigation }) => {
@@ -202,6 +202,31 @@ const Dashboard = ({ navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
+              navigation.replace("Change Password");
+            }}
+          >
+            <Ionicons
+              style={styles.tabIcon}
+              name="key-outline"
+              size={27}
+              color={Colors.whiteColor}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.replace("Change Location");
+            }}
+          >
+            <Ionicons
+              style={styles.tabIcon}
+              name="location"
+              size={27}
+              color={Colors.whiteColor}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              // navigation.replace("Home");
               // handleSignOut();
             }}
           >
@@ -215,14 +240,13 @@ const Dashboard = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.replace("Account Settings");
-              // handleSignOut();
             }}
           >
             <MaterialIcons
               style={styles.tabIcon}
               name="account-circle"
               size={27}
-              color="white"
+              color={Colors.whiteColor}
             />
           </TouchableOpacity>
           <TouchableOpacity
