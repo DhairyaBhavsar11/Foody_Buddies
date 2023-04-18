@@ -4,10 +4,7 @@ import SplashScreen from "./screens/Splash";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import Dashboard from "./screens/Dashboard";
-// import HomeScreen from "./screens/HomeScreen";
-// import CreateNewWorkspace from "./screens/CreateNewWorkspace";
-// import ManageTask from "./screens/ManageTask";
-// import CreateNewTask from "./screens/CreateNewTask";
+import AccountSettings from "./screens/AccountSettings";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +30,11 @@ const App = () => {
         <Stack.Screen
           name="Home"
           component={Dashboard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Account Settings"
+          component={AccountSettings}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

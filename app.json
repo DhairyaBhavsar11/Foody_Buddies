@@ -15,12 +15,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.techarmie.techarmie",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAV4hI7oKB7SIZZnU3TnV9RyDyw8WWiFLw"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.techarmie.techarmie",
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAV4hI7oKB7SIZZnU3TnV9RyDyw8WWiFLw"
+        }
       }
     },
     "web": {

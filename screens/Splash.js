@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, ImageBackground, StyleSheet, Text } from "react-native";
 // import { styles } from "../design-assets/styles";
 import * as helper from "../services/helper";
+import * as location from "../services/location";
 
 const SplashScreen = ({ navigation }) => {
-  setTimeout(() => {
-    navigation.navigate("Login");
-  }, 3000);
+  location
+    .getCurrentLocation()
+    .then((coords) => {
+      console.log(coords);
+      navigation.replace("Login");
+    })
+    .catch((err) => {
+      helper.alertBox(err);
+      navigation.replace("Login");
+    });
+
+  // setTimeout(() => {
+  //   // console.log(useCurrentLocation);
+  //   navigation.replace("Login");
+  // }, 3000);
   return (
     <View style={styles.container}>
       <ImageBackground

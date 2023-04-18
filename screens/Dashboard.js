@@ -10,7 +10,12 @@ import {
 import { styles } from "../design-assets/styles";
 import * as helper from "../services/helper";
 import { MaterialIcons, Feather, SimpleLineIcons } from "@expo/vector-icons";
-import MapView, { Marker, Callout } from "react-native-maps";
+import MapView, {
+  PROVIDER_GOOGLE,
+  Marker,
+  Callout,
+  Circle,
+} from "react-native-maps";
 import * as Colors from "../design-assets/colors";
 
 const Dashboard = ({ navigation }) => {
@@ -34,8 +39,12 @@ const Dashboard = ({ navigation }) => {
       <MapView
         userInterfaceStyle={"light"}
         style={styles.map}
-        minZoomLevel={11}
-        maxZoomLevel={12}
+        // customMapStyle={FoodyBuddies}
+        // customMapStyleID="77908cd3abdd8cff"
+        showsPointsOfInterest={false}
+        showsBuildings={false}
+        minZoomLevel={13}
+        maxZoomLevel={16}
         initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
@@ -43,6 +52,18 @@ const Dashboard = ({ navigation }) => {
           longitudeDelta: 0.0421,
         }}
       >
+        <Circle
+          center={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          radius={2000}
+          strokeWidth={2}
+          strokeColor="rgba(0, 0, 255, 0.5)"
+          fillColor="rgba(0, 0, 255, 0.1)"
+        />
         <Marker
           coordinate={{
             latitude: 37.78825,
@@ -71,12 +92,12 @@ const Dashboard = ({ navigation }) => {
           <Callout tooltip>
             <View>
               <View style={styles.bubble}>
-                <Text style={styles.name}>Favourite Restaurant</Text>
                 {/* <Text>A short description</Text> */}
                 <Image
                   style={styles.image}
                   source={require("../assets/food_banner1.jpeg")}
                 />
+                <Text style={styles.name}>Favourite Restaurant</Text>
               </View>
               <View style={styles.arrowBorder} />
               <View style={styles.arrow} />
@@ -193,6 +214,7 @@ const Dashboard = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+              navigation.replace("Account Settings");
               // handleSignOut();
             }}
           >
@@ -205,6 +227,7 @@ const Dashboard = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+              navigation.replace("Login");
               // handleSignOut();
             }}
           >
