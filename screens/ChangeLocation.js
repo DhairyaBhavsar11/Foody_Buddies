@@ -20,7 +20,8 @@ import {
 import * as Colors from "../design-assets/colors";
 import MapView, { Marker, Callout, Circle } from "react-native-maps";
 
-const ChangeLocation = ({ navigation }) => {
+const ChangeLocation = ({ route, navigation }) => {
+  const { coords, user } = route.params;
   const [markerPosition, setMarkerPosition] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
@@ -143,7 +144,10 @@ const ChangeLocation = ({ navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Change Password");
+              navigation.replace("Change Password", {
+                coords: coords,
+                user: user,
+              });
             }}
           >
             <Ionicons
@@ -167,7 +171,7 @@ const ChangeLocation = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Home");
+              navigation.replace("Home", { coords: coords });
               // handleSignOut();
             }}
           >
@@ -180,7 +184,10 @@ const ChangeLocation = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Account Settings");
+              navigation.replace("Account Settings", {
+                coords: coords,
+                user: user,
+              });
             }}
           >
             <MaterialIcons

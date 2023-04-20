@@ -9,6 +9,7 @@ const SplashScreen = ({ navigation }) => {
     .getCurrentLocation()
     .then((coords) => {
       console.log(coords);
+      helper.setAsync("coords", coords);
       navigation.replace("Login");
     })
     .catch((err) => {

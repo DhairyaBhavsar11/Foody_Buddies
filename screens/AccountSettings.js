@@ -15,10 +15,29 @@ import {
   Feather,
   SimpleLineIcons,
   Ionicons,
+  Entypo,
 } from "@expo/vector-icons";
 import * as Colors from "../design-assets/colors";
+import * as ImagePicker from "expo-image-picker";
 
-const AccountSettings = ({ navigation }) => {
+const AccountSettings = ({ route, navigation }) => {
+  const { coords } = route.params;
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      const source = { uri: result.assets[0].uri };
+      console.log("Source is:", source);
+      setImage(source);
+    }
+  };
   const Item = ({ title }) => {
     // return (
     //   <TouchableOpacity style={[styles.listItem, styles.bgWhite]}>
@@ -42,11 +61,24 @@ const AccountSettings = ({ navigation }) => {
             <Text style={[styles.heading, styles.textWhite]}>
               Account Settings
             </Text>
-            <Image
-              style={styles.profileImage}
-              source={require("../assets/profileImage.png")}
-              resizeMode="center"
-            />
+
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.profileImage}
+                source={
+                  image == "" || image == null
+                    ? require("../assets/profileImage.png")
+                    : { uri: image.uri }
+                }
+                resizeMode="center"
+              />
+              <TouchableOpacity
+                style={styles.floatingButton}
+                onPress={pickImage}
+              >
+                <Entypo name="camera" size={14} color="white" />
+              </TouchableOpacity>
+            </View>
             <Text
               style={[
                 styles.heading,
@@ -126,7 +158,10 @@ const AccountSettings = ({ navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Change Password");
+              navigation.replace("Change Password", {
+                coords: coords,
+                user: user,
+              });
             }}
           >
             <Ionicons
@@ -138,7 +173,10 @@ const AccountSettings = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Change Location");
+              navigation.replace("Change Location", {
+                coords: coords,
+                user: user,
+              });
             }}
           >
             <Ionicons
@@ -150,7 +188,7 @@ const AccountSettings = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Home");
+              navigation.replace("Home", { coords: coords });
               // handleSignOut();
             }}
           >

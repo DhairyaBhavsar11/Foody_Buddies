@@ -15,98 +15,108 @@ import {
   Feather,
   SimpleLineIcons,
   Ionicons,
+  Entypo,
 } from "@expo/vector-icons";
 import * as Colors from "../design-assets/colors";
+import * as ImagePicker from "expo-image-picker";
 
-const ChangePassword = ({ route, navigation }) => {
-  const { coords, user } = route.params;
-  const Item = ({ title }) => {
-    // return (
-    //   <TouchableOpacity style={[styles.listItem, styles.bgWhite]}>
-    //     <Image
-    //       style={styles.listItemImage}
-    //       source={require("../assets/food_banner1.jpeg")}
-    //     />
-    //     <View style={styles.listItemDetails}>
-    //       <Text style={styles.listItemTitle}>{title}</Text>
-    //       <Text style={styles.listItemPrice}>$25</Text>
-    //     </View>
-    //   </TouchableOpacity>
-    // );
+const OrderFood = ({ route, navigation }) => {
+  const { coords, food, restaurant, user } = route.params;
+  const [notes, setNotes] = useState("");
+  const [quantity, setQuantity] = useState("");
+
+  const handleOrder = () => {
+    if (quantity > 0 && quantity < 20) {
+      fetch(helper.networkURL + "addOrder", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          foodName: food.foodName,
+          foodId: food.foodId,
+          foodPrice: food.foodPrice,
+          imagePath: food.imagePath,
+          Notes: notes,
+          quantity: quantity,
+          restaurantId: food.restaurantId,
+          userId: user._id,
+          driverId: "0",
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((response) => {
+          helper.alertBox(response);
+          navigation.replace("Home", { coords: coords });
+        })
+        .catch((err) => {
+          helper.alertBox({
+            label: "Opps !",
+            message: "Something went wrong",
+          });
+        });
+    } else {
+      helper.alertBox({
+        label: "Opps!",
+        message: "You can only enter quantity between 1 to 20",
+      });
+    }
   };
 
-  const [passwordVisible, setPasswordVisible] = useState(false);
   return (
     <View style={[styles.container, styles.bgDarkGreen]}>
-      <View style={[styles.preLoginContainer, styles.bgMateDarkBlack]}>
+      <View style={[styles.bottomContainer, styles.bgMateDarkBlack]}>
         <ScrollView>
           <KeyboardAvoidingView style={styles.profileHeader}>
-            <Text style={[styles.heading, styles.textWhite, styles.mb30]}>
-              Change Password
+            <Text style={[styles.heading, styles.textWhite]}>Order Food</Text>
+
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.foodImage}
+                source={{ uri: helper.networkURL + food.imagePath }}
+                resizeMode="center"
+              />
+            </View>
+            <Text style={[styles.foodheading, styles.textWhite, styles.mb17]}>
+              {food.foodName}
             </Text>
+            <Text
+              style={[styles.fooddescription, styles.textWhite, styles.mb17]}
+            >
+              {food.foodDescription}
+            </Text>
+
             <View style={styles.iconProfileTextInput}>
-              <MaterialIcons name="lock-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={password}
-                // onChangeText={setPassword}
+                value={notes}
+                onChangeText={setNotes}
                 placeholderTextColor={"grey"}
-                placeholder="Old Password"
-                secureTextEntry={passwordVisible ? false : true}
+                placeholder="Add Notes"
               />
-              <TouchableOpacity
-                onPress={() => {
-                  setPasswordVisible(!passwordVisible);
-                }}
-              >
-                <Ionicons
-                  name={passwordVisible ? "eye-off" : "eye"}
-                  size={26}
-                  color="white"
-                />
-              </TouchableOpacity>
             </View>
             <View style={styles.iconProfileTextInput}>
-              <MaterialIcons name="lock-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={password}
-                // onChangeText={setPassword}
+                value={quantity}
+                onChangeText={setQuantity}
                 placeholderTextColor={"grey"}
-                placeholder="New Password"
-                secureTextEntry={passwordVisible ? false : true}
-              />
-              <TouchableOpacity
-                onPress={() => {
-                  setPasswordVisible(!passwordVisible);
-                }}
-              >
-                <Ionicons
-                  name={passwordVisible ? "eye-off" : "eye"}
-                  size={26}
-                  color="white"
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.iconProfileTextInput}>
-              <MaterialIcons name="lock-outline" size={26} color="white" />
-              <TextInput
-                style={[styles.iconInput, styles.textWhite]}
-                // value={password}
-                // onChangeText={setPassword}
-                placeholderTextColor={"grey"}
-                placeholder="Confirm New Password"
-                secureTextEntry={passwordVisible ? false : true}
+                placeholder="Quantity"
               />
             </View>
             <TouchableOpacity
               style={styles.buttonSave}
               onPress={
-                () => handleSignIn()
+                () => {
+                  handleOrder();
+                }
                 // navigation.navigate("Step 2", { firstName, lastName, email })
               }
             >
-              <Text style={styles.buttonText}>Change</Text>
+              <Text style={styles.buttonText}>Order</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </ScrollView>
@@ -116,14 +126,17 @@ const ChangePassword = ({ route, navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              //   navigation.replace("Change Password");
+              navigation.replace("Change Password", {
+                coords: coords,
+                user: user,
+              });
             }}
           >
             <Ionicons
               style={styles.tabIcon}
               name="key-outline"
               size={27}
-              color={Colors.lightGreen}
+              color={Colors.whiteColor}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -166,7 +179,7 @@ const ChangePassword = ({ route, navigation }) => {
               style={styles.tabIcon}
               name="account-circle"
               size={27}
-              color={Colors.whiteColor}
+              color={Colors.lightGreen}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -188,4 +201,4 @@ const ChangePassword = ({ route, navigation }) => {
   );
 };
 
-export default ChangePassword;
+export default OrderFood;

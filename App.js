@@ -7,6 +7,8 @@ import Dashboard from "./screens/Dashboard";
 import AccountSettings from "./screens/AccountSettings";
 import ChangePassword from "./screens/ChangePassword";
 import ChangeLocation from "./screens/ChangeLocation";
+import OrderFood from "./screens/OrderFood";
+import Orders from "./screens/Orders";
 
 const Stack = createStackNavigator();
 
@@ -48,6 +50,18 @@ const App = () => {
         <Stack.Screen
           name="Change Location"
           component={ChangeLocation}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Order Food"
+          component={OrderFood}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Orders"
+          component={Orders}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

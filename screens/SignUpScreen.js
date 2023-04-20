@@ -9,14 +9,36 @@ import {
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { styles } from "../design-assets/styles";
 import * as helper from "../services/helper";
+import * as location from "../services/location";
 
 const SignUpScreen = ({ navigation }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+
+  if (latitude == "" || longitude == "") {
+    helper.getAsync("coords").then((coords) => {
+      // console.log(coords);
+      setLatitude(coords.latitude);
+      setLongitude(coords.longitude);
+      location
+        .fetchAddress(coords.latitude, coords.longitude)
+        .then((address) => {
+          console.log(address);
+          setAddress(address);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
 
   // helper.getAsync("currentUser").then((data) => {
   //   console.log(data.email);
@@ -28,7 +50,7 @@ const SignUpScreen = ({ navigation }) => {
         if (password.length >= 6) {
           if (helper.validateEmail(email)) {
             // var userName = helper.generateUsername(email);
-            fetch(helper.networkURL + "signUp", {
+            fetch(helper.networkURL + "userSignUp", {
               method: "POST",
               headers: {
                 Accept: "application/json",
@@ -38,8 +60,12 @@ const SignUpScreen = ({ navigation }) => {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
+                mobile: mobile,
                 password: password,
                 confirmPassword: confirmPassword,
+                address: address,
+                latitude: latitude,
+                longitude: longitude,
               }),
             })
               .then((res) => res.json())
@@ -101,6 +127,15 @@ const SignUpScreen = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
             placeholder="Email"
+          />
+        </View>
+        <View style={styles.iconTextInput}>
+          <MaterialIcons name="call" size={26} color="black" />
+          <TextInput
+            style={styles.iconInput}
+            value={mobile}
+            onChangeText={setMobile}
+            placeholder="Mobile number"
           />
         </View>
         <View style={styles.iconTextInput}>

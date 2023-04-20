@@ -13,26 +13,131 @@ import {
   MaterialIcons,
   Feather,
   SimpleLineIcons,
+  FontAwesome,
   Ionicons,
 } from "@expo/vector-icons";
 import MapView, { Marker, Callout, Circle } from "react-native-maps";
 import * as Colors from "../design-assets/colors";
 
-const Dashboard = ({ navigation }) => {
-  const Item = ({ title }) => {
+const Dashboard = ({ route, navigation }) => {
+  const { coords } = route.params;
+
+  const [user, setUser] = useState("");
+  const [markers, setMarkers] = useState([]);
+
+  const [selectedRestaurant, setSelectedRestaurant] = useState("");
+  const [foodList, setFoodList] = useState([]);
+
+  if (user == "") {
+    helper.getAsync("user").then((user) => {
+      if (user && user != "" && user._id) {
+        setUser(user);
+        getRestaurants();
+      } else {
+        helper.setAsync("user", "");
+        navigation.replace("Login");
+      }
+    });
+  }
+
+  function getRestaurants() {
+    fetch(helper.networkURL + "getNearByRestaurants", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((response) => {
+        console.log(response);
+        MarkerList(response);
+      })
+      .catch((err) => {
+        helper.alertBox({
+          label: "Opps !",
+          message: "Something went wrong",
+        });
+      });
+  }
+
+  function getFoods(restaurantID) {
+    fetch(helper.networkURL + "getFoods", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        restaurantId: restaurantID,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((response) => {
+        console.log(response);
+        FoodList(response);
+      })
+      .catch((err) => {
+        helper.alertBox({
+          label: "Opps !",
+          message: "Something went wrong",
+        });
+      });
+  }
+
+  const Item = ({ food }) => {
+    // console.log(food._id);
     return (
-      <TouchableOpacity style={[styles.listItem, styles.bgWhite]}>
+      <TouchableOpacity
+        style={[styles.listItem, styles.bgWhite]}
+        onPress={() => {
+          navigation.replace("Order Food", {
+            coords: coords,
+            food: food,
+            restaurant: selectedRestaurant,
+            user: user,
+          });
+        }}
+      >
         <Image
           style={styles.listItemImage}
-          source={require("../assets/food_banner1.jpeg")}
+          source={{ uri: helper.networkURL + food.imagePath }}
         />
         <View style={styles.listItemDetails}>
-          <Text style={styles.listItemTitle}>{title}</Text>
-          <Text style={styles.listItemPrice}>$25</Text>
+          <Text style={styles.listItemTitle}>{food.foodName}</Text>
+          <Text style={styles.listItemPrice}>${food.foodPrice}</Text>
         </View>
       </TouchableOpacity>
     );
   };
+
+  function MarkerList(restaurants) {
+    var tempMarkerList = [];
+    restaurants.forEach((restaurant) => {
+      tempMarkerList.push({
+        key: restaurant._id,
+        latitude: restaurant.latitude,
+        longitude: restaurant.longitude,
+        title: restaurant.restaurantName,
+        // imageURL: helper.networkURL + restaurant.
+      });
+    });
+    setMarkers(tempMarkerList);
+  }
+
+  function FoodList(foods) {
+    var tempFoods = [];
+
+    foods.forEach((food) => {
+      tempFoods.push(food);
+    });
+    setFoodList(tempFoods);
+  }
 
   return (
     <View style={[styles.container, styles.bgWhite]}>
@@ -43,31 +148,31 @@ const Dashboard = ({ navigation }) => {
         // customMapStyleID="77908cd3abdd8cff"
         showsPointsOfInterest={false}
         showsBuildings={false}
-        minZoomLevel={13}
+        minZoomLevel={11}
         maxZoomLevel={16}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: coords.latitude,
+          longitude: coords.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
         <Circle
           center={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: coords.latitude,
+            longitude: coords.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          radius={2000}
+          radius={5000}
           strokeWidth={2}
           strokeColor="rgba(0, 0, 255, 0.5)"
           fillColor="rgba(0, 0, 255, 0.1)"
         />
         <Marker
           coordinate={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: coords.latitude,
+            longitude: coords.longitude,
           }}
           title="Your Location"
         >
@@ -76,62 +181,53 @@ const Dashboard = ({ navigation }) => {
             style={styles.homeMarker}
           />
         </Marker>
-
-        <Marker
-          coordinate={{
-            latitude: 37.77825,
-            longitude: -122.4324,
-          }}
-          title="Marker Title"
-          description="Marker Description"
-        >
-          <Image
-            source={require("../assets/map_marker.png")}
-            style={styles.restaurantMarker}
-          />
-          <Callout tooltip>
-            <View>
-              <View style={styles.bubble}>
-                {/* <Text>A short description</Text> */}
-                <Image
-                  style={styles.image}
-                  source={require("../assets/food_banner1.jpeg")}
-                />
-                <Text style={styles.name}>Favourite Restaurant</Text>
-              </View>
-              <View style={styles.arrowBorder} />
-              <View style={styles.arrow} />
-            </View>
-          </Callout>
-        </Marker>
-        <Marker
-          coordinate={{
-            latitude: 37.79825,
-            longitude: -122.4324,
-          }}
-          title="Marker Title"
-          description="Marker Description"
-        >
-          <Image
-            source={require("../assets/map_marker.png")}
-            style={styles.restaurantMarker}
-          />
-          <Callout tooltip>
-            <View>
-              <View style={styles.bubble}>
-                <Text style={styles.name}>Favourite Restaurant</Text>
-                {/* <Text>A short description</Text> */}
-                <Image
-                  style={styles.image}
-                  source={require("../assets/food_banner1.jpeg")}
-                />
-              </View>
-              <View style={styles.arrowBorder} />
-              <View style={styles.arrow} />
-            </View>
-          </Callout>
-        </Marker>
+        {markers.map((marker, index) => {
+          return (
+            <Marker
+              key={index}
+              onPress={() => {
+                console.log(marker.key);
+                setSelectedRestaurant(marker);
+                getFoods(marker.key);
+              }}
+              coordinate={{
+                latitude: marker.latitude,
+                longitude: marker.longitude,
+              }}
+              title={marker.title}
+            >
+              <Image
+                source={require("../assets/map_marker.png")}
+                style={styles.restaurantMarker}
+              />
+              <Callout tooltip>
+                <View>
+                  <View style={styles.bubble}>
+                    {/* <Text>A short description</Text> */}
+                    <Image
+                      style={styles.image}
+                      source={require("../assets/food_banner1.jpeg")}
+                    />
+                    <Text style={styles.name}>{marker.title}</Text>
+                  </View>
+                  <View style={styles.arrowBorder} />
+                  <View style={styles.arrow} />
+                </View>
+              </Callout>
+            </Marker>
+          );
+        })}
       </MapView>
+      <View style={styles.categoryHorizontalScrollView}>
+        <TouchableOpacity
+          style={[styles.orderButton, styles.bgMateLightBlack]}
+          onPress={() => {
+            navigation.replace("Orders", { coords: coords, user: user });
+          }}
+        >
+          <FontAwesome name="list" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
       <View style={styles.categoryHorizontalScrollView}>
         <ScrollView
           horizontal
@@ -151,22 +247,28 @@ const Dashboard = ({ navigation }) => {
           }}
         >
           <TouchableOpacity style={[styles.chipsItem, styles.bgLightGreen]}>
-            <Text style={styles.textBlack}>Chip 1</Text>
+            <Text style={styles.textBlack}>French</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.chipsItem}>
-            <Text style={styles.textWhite}>Chip 2</Text>
+            <Text style={styles.textWhite}>Chinese</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.chipsItem}>
-            <Text style={styles.textWhite}>Chip 3</Text>
+            <Text style={styles.textWhite}>Japanese</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.chipsItem}>
-            <Text style={styles.textWhite}>Chip 4</Text>
+            <Text style={styles.textWhite}>Indian</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.chipsItem}>
-            <Text style={styles.textWhite}>Chip 5</Text>
+            <Text style={styles.textWhite}>Italian</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.chipsItem}>
-            <Text style={styles.textWhite}>Chip 6</Text>
+            <Text style={styles.textWhite}>Greek</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.chipsItem}>
+            <Text style={styles.textWhite}>Spanish</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.chipsItem}>
+            <Text style={styles.textWhite}>Lebanese</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -187,8 +289,9 @@ const Dashboard = ({ navigation }) => {
             paddingRight: Platform.OS === "android" ? 20 : 0,
           }}
         >
-          <Item title={"Traditional Food - Olive Garden"} />
-          <Item title={"Traditional "} />
+          {foodList.map((food, index) => {
+            return <Item key={index} food={food} />;
+          })}
         </ScrollView>
         {/* <Text style={[styles.heading, styles.textWhite]}>
           Let's get something
@@ -202,7 +305,7 @@ const Dashboard = ({ navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Change Password");
+              navigation.replace("Change Password", { coords: coords });
             }}
           >
             <Ionicons
@@ -214,7 +317,7 @@ const Dashboard = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Change Location");
+              navigation.replace("Change Location", { coords: coords });
             }}
           >
             <Ionicons
@@ -239,7 +342,7 @@ const Dashboard = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Account Settings");
+              navigation.replace("Account Settings", { coords: coords });
             }}
           >
             <MaterialIcons
@@ -251,8 +354,8 @@ const Dashboard = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+              helper.setAsync("user", "");
               navigation.replace("Login");
-              // handleSignOut();
             }}
           >
             <SimpleLineIcons
