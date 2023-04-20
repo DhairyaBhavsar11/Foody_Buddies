@@ -41,19 +41,41 @@ const AccountSettings = ({ route, navigation }) => {
       setImage(source);
     }
   };
-  const Item = ({ title }) => {
-    // return (
-    //   <TouchableOpacity style={[styles.listItem, styles.bgWhite]}>
-    //     <Image
-    //       style={styles.listItemImage}
-    //       source={require("../assets/food_banner1.jpeg")}
-    //     />
-    //     <View style={styles.listItemDetails}>
-    //       <Text style={styles.listItemTitle}>{title}</Text>
-    //       <Text style={styles.listItemPrice}>$25</Text>
-    //     </View>
-    //   </TouchableOpacity>
-    // );
+
+  const handleUpdateProfile = async () => {
+    // navigation.replace("Home");
+    if (firstName != "" && lastName != "" && contactNo != "") {
+      fetch(helper.networkURL + "updateProfile", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user._id,
+          firstName: firstName,
+          lastName: lastName,
+          mobile: contactNo,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((response) => {
+          helper.alertBox(response);
+        })
+        .catch((err) => {
+          helper.alertBox({
+            label: "Opps !",
+            message: "Something went wrong",
+          });
+        });
+    } else {
+      helper.alertBox({
+        label: "Opps!",
+        message: "All fields are mendatory !!",
+      });
+    }
   };
 
   return (
@@ -135,7 +157,9 @@ const AccountSettings = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.buttonSave}
               onPress={
-                () => {}
+                () => {
+                  handleUpdateProfile();
+                }
                 // navigation.navigate("Step 2", { firstName, lastName, email })
               }
             >

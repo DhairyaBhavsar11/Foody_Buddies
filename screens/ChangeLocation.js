@@ -34,6 +34,35 @@ const ChangeLocation = ({ route, navigation }) => {
     "40 Fountainhead Rd, North York, ON M3J 2V1"
   );
 
+  const handleUpdateLocation = async () => {
+    // navigation.replace("Home");
+    fetch(helper.networkURL + "updateAddress", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user._id,
+        address: address,
+        latitude: markerPosition.latitude,
+        longitude: markerPosition.longitude,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((response) => {
+        helper.alertBox(response);
+      })
+      .catch((err) => {
+        helper.alertBox({
+          label: "Opps !",
+          message: "Something went wrong",
+        });
+      });
+  };
+
   const handleMarkerDrag = (e) => {
     setMarkerPosition(e.nativeEvent.coordinate);
     fetch(
@@ -134,7 +163,7 @@ const ChangeLocation = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buttonSave}
             onPress={
-              () => handleSignIn()
+              () => handleUpdateLocation()
               // navigation.navigate("Step 2", { firstName, lastName, email })
             }
           >

@@ -24,19 +24,42 @@ const ChangePassword = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  const Item = ({ title }) => {
-    // return (
-    //   <TouchableOpacity style={[styles.listItem, styles.bgWhite]}>
-    //     <Image
-    //       style={styles.listItemImage}
-    //       source={require("../assets/food_banner1.jpeg")}
-    //     />
-    //     <View style={styles.listItemDetails}>
-    //       <Text style={styles.listItemTitle}>{title}</Text>
-    //       <Text style={styles.listItemPrice}>$25</Text>
-    //     </View>
-    //   </TouchableOpacity>
-    // );
+  const handleUpdatePassword = async () => {
+    // navigation.replace("Home");
+    if (oldPassword != "" && newPassword != "" && confirmNewPassword != "") {
+      fetch(helper.networkURL + "updatePassword", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user._id,
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+        }),
+      })
+        .then((res) => {
+          if (res.status == 200) {
+            helper.alertBox({
+              label: "success",
+              message: "Your password changed successfully !!",
+            });
+            navigator.replace("Login");
+          }
+        })
+        .catch((err) => {
+          helper.alertBox({
+            label: "Opps !",
+            message: "Something went wrong",
+          });
+        });
+    } else {
+      helper.alertBox({
+        label: "Opps!",
+        message: "Password and confirm password must be same !!",
+      });
+    }
   };
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -106,7 +129,9 @@ const ChangePassword = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.buttonSave}
               onPress={
-                () => {}
+                () => {
+                  handleUpdatePassword();
+                }
                 // navigation.navigate("Step 2", { firstName, lastName, email })
               }
             >
