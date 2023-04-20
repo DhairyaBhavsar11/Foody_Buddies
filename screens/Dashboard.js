@@ -305,7 +305,10 @@ const Dashboard = ({ route, navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Change Password", { coords: coords });
+              navigation.replace("Change Password", {
+                coords: coords,
+                user: user,
+              });
             }}
           >
             <Ionicons
@@ -317,7 +320,10 @@ const Dashboard = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Change Location", { coords: coords });
+              navigation.replace("Change Location", {
+                coords: coords,
+                user: user,
+              });
             }}
           >
             <Ionicons
@@ -342,7 +348,10 @@ const Dashboard = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.replace("Account Settings", { coords: coords });
+              navigation.replace("Account Settings", {
+                coords: coords,
+                user: user,
+              });
             }}
           >
             <MaterialIcons

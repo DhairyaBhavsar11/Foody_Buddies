@@ -22,9 +22,12 @@ import MapView, { Marker, Callout, Circle } from "react-native-maps";
 
 const ChangeLocation = ({ route, navigation }) => {
   const { coords, user } = route.params;
+
+  const [unitNo, setUnitNo] = useState("");
+
   const [markerPosition, setMarkerPosition] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: user.latitude,
+    longitude: user.longitude,
   });
 
   const [address, setAddress] = useState(
@@ -85,8 +88,8 @@ const ChangeLocation = ({ route, navigation }) => {
             <Octicons name="number" size={24} color="white" />
             <TextInput
               style={[styles.iconInput, styles.textWhite]}
-              // value={password}
-              // onChangeText={setPassword}
+              value={unitNo}
+              onChangeText={setUnitNo}
               placeholderTextColor={"grey"}
               placeholder="Unit"
             />
@@ -103,8 +106,8 @@ const ChangeLocation = ({ route, navigation }) => {
               maxZoomLevel={18}
               zoomTapEnabled={true}
               initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
+                latitude: user.latitude,
+                longitude: user.longitude,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}

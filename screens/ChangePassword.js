@@ -20,6 +20,10 @@ import * as Colors from "../design-assets/colors";
 
 const ChangePassword = ({ route, navigation }) => {
   const { coords, user } = route.params;
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
   const Item = ({ title }) => {
     // return (
     //   <TouchableOpacity style={[styles.listItem, styles.bgWhite]}>
@@ -48,8 +52,8 @@ const ChangePassword = ({ route, navigation }) => {
               <MaterialIcons name="lock-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={password}
-                // onChangeText={setPassword}
+                value={oldPassword}
+                onChangeText={setOldPassword}
                 placeholderTextColor={"grey"}
                 placeholder="Old Password"
                 secureTextEntry={passwordVisible ? false : true}
@@ -70,8 +74,8 @@ const ChangePassword = ({ route, navigation }) => {
               <MaterialIcons name="lock-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={password}
-                // onChangeText={setPassword}
+                value={newPassword}
+                onChangeText={setNewPassword}
                 placeholderTextColor={"grey"}
                 placeholder="New Password"
                 secureTextEntry={passwordVisible ? false : true}
@@ -92,8 +96,8 @@ const ChangePassword = ({ route, navigation }) => {
               <MaterialIcons name="lock-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={password}
-                // onChangeText={setPassword}
+                value={confirmNewPassword}
+                onChangeText={setConfirmNewPassword}
                 placeholderTextColor={"grey"}
                 placeholder="Confirm New Password"
                 secureTextEntry={passwordVisible ? false : true}
@@ -102,7 +106,7 @@ const ChangePassword = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.buttonSave}
               onPress={
-                () => handleSignIn()
+                () => {}
                 // navigation.navigate("Step 2", { firstName, lastName, email })
               }
             >

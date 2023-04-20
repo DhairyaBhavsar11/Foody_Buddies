@@ -21,8 +21,11 @@ import * as Colors from "../design-assets/colors";
 import * as ImagePicker from "expo-image-picker";
 
 const AccountSettings = ({ route, navigation }) => {
-  const { coords } = route.params;
+  const { coords, user } = route.params;
   const [image, setImage] = useState(null);
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [contactNo, setContactNo] = useState(user.mobile);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -93,8 +96,8 @@ const AccountSettings = ({ route, navigation }) => {
               <Ionicons name="person" size={24} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
+                value={firstName}
+                onChangeText={setFirstName}
                 placeholderTextColor={"grey"}
                 placeholder="First name"
               />
@@ -103,8 +106,8 @@ const AccountSettings = ({ route, navigation }) => {
               <Ionicons name="person" size={24} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
+                value={lastName}
+                onChangeText={setLastName}
                 placeholderTextColor={"grey"}
                 placeholder="Last name"
               />
@@ -113,8 +116,6 @@ const AccountSettings = ({ route, navigation }) => {
               <MaterialIcons name="mail-outline" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
                 placeholderTextColor={"grey"}
                 placeholder="Email"
                 value="bhautikpethani42@gmail.com"
@@ -125,26 +126,16 @@ const AccountSettings = ({ route, navigation }) => {
               <MaterialIcons name="phone" size={26} color="white" />
               <TextInput
                 style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
+                value={contactNo}
+                onChangeText={setContactNo}
                 placeholderTextColor={"grey"}
                 placeholder="Contact number"
-              />
-            </View>
-            <View style={styles.iconProfileTextInput}>
-              <Ionicons name="location" size={26} color="white" />
-              <TextInput
-                style={[styles.iconInput, styles.textWhite]}
-                // value={email}
-                // onChangeText={setEmail}
-                placeholderTextColor={"grey"}
-                placeholder="Address"
               />
             </View>
             <TouchableOpacity
               style={styles.buttonSave}
               onPress={
-                () => handleSignIn()
+                () => {}
                 // navigation.navigate("Step 2", { firstName, lastName, email })
               }
             >
